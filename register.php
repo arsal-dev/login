@@ -22,7 +22,10 @@
                     $errors = 'Email Already Exists Please <a href="./login.php">Login</a>!';
                 }
                 else {
-                    $sql = "INSERT INTO `users` (`username`, `email`, `password`) VALUES ('$name', '$email', '$password');";
+
+                    $hashed_pass = password_hash($password, PASSWORD_DEFAULT);
+
+                    $sql = "INSERT INTO `users` (`username`, `email`, `password`) VALUES ('$name', '$email', '$hashed_pass');";
                     $result = $conn->query($sql);
                     // $result == 1, $result == true, $result == 'true
                     if($result){

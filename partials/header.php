@@ -29,9 +29,11 @@
           <a class="nav-link active" aria-current="page" href="./login.php">login</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <a href="./logout.php" class="btn btn-secondary">Logout</a>
-      </form>
+      <?php
+        session_start();
+      if(isset($_SESSION['username'])){ ?>
+        <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-secondary">Logout</button>
+      <?php } ?>
     </div>
   </div>
 </nav>

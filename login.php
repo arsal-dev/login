@@ -7,12 +7,21 @@
     if(isset($_POST['submit'])){
         $email = $_POST['email'];
         $password = $_POST['password'];
-
-        $sql = "SELECT * FROM users WHERE email = '$email' AND password = '$password'";
+        
+        $sql = "SELECT * FROM users WHERE email = '$email'";
         $result = $conn->query($sql);
-
+        $row = $result->fetch_assoc();
         if($result->num_rows > 0){
-            header('Location: welcome.php');
+            $db_pass = $row['password'];
+            if(password_verify($password, $db_pass)){
+                session_start();
+                $_SESSION['username'] = $row['username']; 
+                header('Location: welcome.php');
+            }
+            else {
+                $alert = 'true';
+                $errors = 'Your Email or Password is worng!';
+            }
         }
         else {
             $alert = 'true';
